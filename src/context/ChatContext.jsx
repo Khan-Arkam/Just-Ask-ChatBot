@@ -1,7 +1,8 @@
-// ChatContext.jsx
 import { createContext, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const ChatContext = createContext();
 
@@ -67,7 +68,7 @@ const ContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:3001/chat', { message: prompt, model });
+      const res = await axios.post(`${BACKEND_URL}/chat`, { message: prompt, model });
       const content = res.data.reply.trim();
       const used = res.data.model || model;
 
