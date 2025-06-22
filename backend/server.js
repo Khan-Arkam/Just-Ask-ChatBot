@@ -6,7 +6,12 @@ import axios from 'axios';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ['https://just-ask-chat-bot.vercel.app'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 
 const API_KEYS = process.env.OPENROUTER_API_KEYS?.split(',').map(k => k.trim()) || [];
