@@ -35,6 +35,18 @@ app.post('/chat', async (req, res) => {
 
   const selectedModel = model === 'openrouter/auto' ? DEFAULT_AUTO_MODEL : model;
 
+
+  console.log(`📨 Received message: "${message}" with model: "${selectedModel}"`);
+
+  const headers = {
+    'Authorization': `Bearer ${API_KEY}`,
+    'Content-Type': 'application/json',
+    'User-Agent': 'JustAskBot (https://just-ask-chat-bot.vercel.app)',
+    'Referer': 'https://just-ask-chat-bot.vercel.app' // ✅ FIXED HERE
+  };
+
+  console.log("🧾 Headers being sent to OpenRouter:", headers);
+
   try {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
@@ -44,25 +56,23 @@ app.post('/chat', async (req, res) => {
         max_tokens: 50,
         temperature: 0.7,
       },
-      {
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-          'User-Agent': 'JustAskBot (https://just-ask-chat-bot.vercel.app)',
-          'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app'
-        }
-      }
+      { headers }
     );
 
     const reply = response.data.choices[0].message.content;
     const usedModel = response.data.model;
+    console.log('✅ OpenRouter responded successfully');
     return res.json({ reply, model: usedModel });
 
   } catch (err) {
-    const errMsg = err.response?.data?.error?.message || err.message;
-    console.warn(`❌ API request failed — ${errMsg}`);
+  
+    console.warn("❌ API request failed — OpenRouter returned an error");
+    console.error(err.response?.data || err.message); 
+    console.error("🧾 Status code:", err.response?.status || 'No status');
+    console.error("🧾 Response headers:", err.response?.headers || 'No headers');
+
     return res.status(500).json({
-      reply: `[!] Request failed — ${errMsg}`,
+      reply: `[!] Request failed — ${err.response?.data?.error?.message || err.message}`,
       model: selectedModel,
     });
   }
@@ -74,7 +84,7 @@ app.get('/test', async (req, res) => {
       headers: {
         'Authorization': `Bearer ${API_KEY}`,
         'User-Agent': 'JustAskBot (https://just-ask-chat-bot.vercel.app)',
-        'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app'
+        'Referer': 'https://just-ask-chat-bot.vercel.app'
       }
     });
     res.json({ models: response.data });
@@ -87,5 +97,5 @@ app.get('/test', async (req, res) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
