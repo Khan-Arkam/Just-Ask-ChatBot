@@ -2,15 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
 
-// Load environment variables in development
-if (process.env.NODE_ENV !== 'production') {
+// Load environment variables (works both locally and on Render)
+if (typeof process.env.OPENROUTER_API_KEYS === 'undefined') {
   const dotenv = await import('dotenv');
   dotenv.config();
 }
 
 const app = express();
 
-// Enable CORS for Vercel frontend
+// Enable CORS for frontend
 app.use(cors({
   origin: ['https://just-ask-chat-bot.vercel.app'],
   methods: ['GET', 'POST'],
@@ -19,20 +19,18 @@ app.use(cors({
 
 app.use(express.json());
 
-// Load API key
+// Read API key
 const API_KEY = process.env.OPENROUTER_API_KEYS?.trim();
 
 if (!API_KEY) {
-  console.error("❌ No API key found. Make sure 'OPENROUTER_API_KEYS' is set.");
+  console.error("❌ No API key found. Make sure 'OPENROUTER_API_KEYS' is set in Render Environment.");
   process.exit(1);
 }
 
 console.log('✅ Loaded key:', API_KEY.slice(0, 12) + '...');
 
-// Default model for auto mode
 const DEFAULT_AUTO_MODEL = 'mistralai/mixtral-8x7b-instruct';
 
-// Chat endpoint
 app.post('/chat', async (req, res) => {
   const { message, model } = req.body;
 
@@ -41,8 +39,6 @@ app.post('/chat', async (req, res) => {
   }
 
   const selectedModel = model === 'openrouter/auto' ? DEFAULT_AUTO_MODEL : model;
-  const maxTokens = 50;
-  const temperature = 0.7;
 
   try {
     const response = await axios.post(
@@ -50,8 +46,8 @@ app.post('/chat', async (req, res) => {
       {
         model: selectedModel,
         messages: [{ role: 'user', content: message }],
-        max_tokens: maxTokens,
-        temperature,
+        max_tokens: 50,
+        temperature: 0.7
       },
       {
         headers: {
@@ -65,6 +61,7 @@ app.post('/chat', async (req, res) => {
 
     const reply = response.data.choices[0].message.content;
     const usedModel = response.data.model;
+
     return res.json({ reply, model: usedModel });
 
   } catch (err) {
