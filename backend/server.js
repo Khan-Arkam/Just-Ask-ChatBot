@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
 
-// ✅ Only load dotenv in local dev mode
 if (process.env.NODE_ENV !== 'production') {
   const dotenv = await import('dotenv');
   dotenv.config();
@@ -54,9 +53,13 @@ app.post('/chat', async (req, res) => {
         {
           headers: {
             Authorization: `Bearer ${key}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app',
+            'User-Agent': 'JustAskChatBot (https://just-ask-chat-bot.vercel.app)',
           },
         }
       );
+
 
       const reply = response.data.choices[0].message.content;
       const usedModel = response.data.model;
