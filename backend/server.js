@@ -3,12 +3,10 @@ import cors from 'cors';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-// Load environment variables (from .env or Render secret)
 dotenv.config();
 
 const app = express();
 
-// CORS for frontend
 app.use(cors({
   origin: ['https://just-ask-chat-bot.vercel.app'],
   methods: ['GET', 'POST'],
@@ -17,7 +15,6 @@ app.use(cors({
 
 app.use(express.json());
 
-// ✅ Use environment variable or fallback to hardcoded key (not recommended for production)
 const API_KEY = process.env.OPENROUTER_API_KEYS?.trim() || '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';
 
 if (!API_KEY) {
@@ -29,7 +26,6 @@ console.log('✅ Loaded key:', API_KEY.slice(0, 12) + '...');
 
 const DEFAULT_AUTO_MODEL = 'mistralai/mixtral-8x7b-instruct';
 
-// Main chat endpoint
 app.post('/chat', async (req, res) => {
   const { message, model } = req.body;
 
@@ -72,7 +68,6 @@ app.post('/chat', async (req, res) => {
   }
 });
 
-// ✅ /test route to validate API key from browser
 app.get('/test', async (req, res) => {
   try {
     const response = await axios.get('https://openrouter.ai/api/v1/models', {
@@ -89,7 +84,7 @@ app.get('/test', async (req, res) => {
   }
 });
 
-// Start server
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
