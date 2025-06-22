@@ -394,5 +394,23 @@
   }
 }
 
+.mobile-toggle-icon {
+  display: none;
+  width: 24px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .mobile-toggle-icon {
+    display: inline;
+    margin-right: 10px;
+  }
+
+  .main .nav {
+    justify-content: space-between;
+  }
+}
+
+
 
 

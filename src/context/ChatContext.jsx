@@ -92,7 +92,7 @@ const ContextProvider = ({ children }) => {
             messages: deepClone(finalMsgs),
             firstResponseCache:
               !updated[activeChatId].firstResponseCache &&
-              finalMsgs.filter((m) => m.role === 'assistant').length === 1
+                finalMsgs.filter((m) => m.role === 'assistant').length === 1
                 ? finalMsgs.find((m) => m.role === 'assistant')?.content
                 : updated[activeChatId].firstResponseCache
           };
@@ -103,25 +103,25 @@ const ContextProvider = ({ children }) => {
           prev.map(chat =>
             chat.chatId === activeChatId
               ? {
-                  ...chat,
-                  messages: deepClone(finalMsgs),
-                  firstResponseCache:
-                    !chat.firstResponseCache &&
+                ...chat,
+                messages: deepClone(finalMsgs),
+                firstResponseCache:
+                  !chat.firstResponseCache &&
                     finalMsgs.filter((m) => m.role === 'assistant').length === 1
-                      ? finalMsgs.find((m) => m.role === 'assistant')?.content
-                      : chat.firstResponseCache
-                }
+                    ? finalMsgs.find((m) => m.role === 'assistant')?.content
+                    : chat.firstResponseCache
+              }
               : chat
           )
         );
       }
     } catch (err) {
-      const fallback = `Error talking to ${model === 'openrouter/auto' ? 'Chatbot' : model.split('/').pop()}`;
+      const fallback = `Error talking to ${model === 'mistralai/mistral-small' ? 'Chatbot' : model.split('/').pop()}`;
       const failedMsgs = [...messages, userMsg, {
         role: 'assistant',
         content: fallback,
         loading: false,
-        modelUsed: model === 'openrouter/auto' ? 'Chatbot' : model.split('/').pop(),
+        modelUsed: model === 'mistralai/mistral-small' ? 'Chatbot' : model.split('/').pop(),
         msgId: uuidv4()
       }];
 

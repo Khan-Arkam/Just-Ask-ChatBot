@@ -123,10 +123,23 @@
   100% { opacity: 0; transform: translateY(-5px); }
 }
 
-@media (max-width:600px) {
-    .sidebar{
-        display: none;
-    }
+@media (max-width: 600px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    z-index: 1000;
+    height: 100vh;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.mobile-visible {
+    left: 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  }
 }
+
+
 
 

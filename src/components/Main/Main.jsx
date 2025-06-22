@@ -1,3 +1,4 @@
+// main.jsx
 import React, { useContext, useEffect, useRef, useState, useMemo } from 'react';
 import './Main.css';
 import { assets } from '../../assets/assets';
@@ -34,22 +35,17 @@ const Main = () => {
   const maxQuestions = 10;
   const isLimitReached = questionCount >= maxQuestions;
 
-
   useEffect(() => {
     if (!lastAssistantMsg) return;
-
     const msgId = lastAssistantMsg.msgId;
     previousChatIdRef.current = activeChatId;
-
     const existing = typingStateRef.current[msgId];
+
     if (existing?.doneTyping) {
       setDisplayText(existing.displayText || lastAssistantMsg.content);
       setDoneTyping(true);
     } else {
-      typingStateRef.current[msgId] = {
-        displayText: '',
-        doneTyping: false
-      };
+      typingStateRef.current[msgId] = { displayText: '', doneTyping: false };
       setDisplayText('');
       setDoneTyping(false);
     }
@@ -57,7 +53,6 @@ const Main = () => {
 
   useEffect(() => {
     if (!lastAssistantMsg || doneTyping) return;
-
     const content = lastAssistantMsg.content;
     const msgId = lastAssistantMsg.msgId;
     let i = 0;
@@ -78,7 +73,6 @@ const Main = () => {
     return () => clearInterval(interval);
   }, [doneTyping, lastAssistantMsg]);
 
- 
   useEffect(() => {
     if (doneTyping) {
       endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -95,12 +89,19 @@ const Main = () => {
   return (
     <div className="main">
       <div className="nav">
+        <div className="mobile-menu-toggle">
+          <img
+            src={assets.menu_icon}
+            alt="menu"
+            className="mobile-toggle-icon"
+            onClick={toggleSidebar}
+          />
+        </div>
         <p>Chatbot</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <img src={assets.user_icon} alt="user" />
         </div>
       </div>
-
       <div className="main-container">
         {!showResult ? (
           <>
@@ -121,10 +122,7 @@ const Main = () => {
               const isLast = index === lastAssistantIndex;
               return (
                 <div key={index} className={msg.role === 'user' ? 'user-query' : 'ai-reply'}>
-                  <img
-                    src={msg.role === 'user' ? assets.user_icon : assets.artificial_intelligence}
-                    alt={msg.role}
-                  />
+                  <img src={msg.role === 'user' ? assets.user_icon : assets.artificial_intelligence} alt={msg.role} />
                   <div className="reply-container">
                     {msg.role === 'assistant' && msg.loading ? (
                       <div className="loader">
@@ -136,9 +134,7 @@ const Main = () => {
                       <div className="reply-box">
                         <ReactMarkdown
                           children={
-                            isLast
-                              ? displayText + (!doneTyping ? '▍' : '')
-                              : msg.content
+                            isLast ? displayText + (!doneTyping ? '▍' : '') : msg.content
                           }
                           remarkPlugins={[remarkGfm]}
                           rehypePlugins={[rehypeRaw]}
@@ -173,15 +169,12 @@ const Main = () => {
         <div className="main-bottom">
           <div className="search-box">
             <select value={model} onChange={(e) => setModel(e.target.value)} className="model-select">
-              <option value="openrouter/auto">Auto (Recommended)</option>
+              <option value="mistralai/mistral-small">Auto (Default: Mistral Small)</option>
               <option value="openai/gpt-3.5-turbo">GPT‑3.5 Turbo (Free)</option>
-              <option value="openai/gpt-4">GPT‑4 (Paid)</option>
-              <option value="anthropic/claude-3.5-sonnet">Claude 3.5 (Paid)</option>
-              <option value="mistralai/mistral-small">Mistral Small (Free)</option>
+              <option value="anthropic/claude-3.5-sonnet">Claude 3.5 (Free Tier)</option>
+              <option value="google/gemini-pro">Gemini Pro (Free Tier)</option>
+              <option value="mistralai/mixtral-8x7b-instruct">Mixtral 8x7B (Free)</option>
               <option value="nousresearch/nous-hermes-2-mixtral-8x7b-dpo">Hermes 2 (Free)</option>
-              <option value="mistralai/mixtral-8x7b-instruct">Mixtral 8x7B (Open)</option>
-              <option disabled value="google/gemini-pro">Gemini Pro (Unavailable)</option>
-              <option disabled value="meta-llama/llama-3-8b-instruct:free">LLaMA 3 8B (Unavailable)</option>
             </select>
 
             <input
