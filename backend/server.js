@@ -1,16 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
+import dotenv from 'dotenv';
 
-// Load environment variables (works both locally and on Render)
-if (typeof process.env.OPENROUTER_API_KEYS === 'undefined') {
-  const dotenv = await import('dotenv');
-  dotenv.config();
-}
+dotenv.config();
 
 const app = express();
 
-// Enable CORS for frontend
 app.use(cors({
   origin: ['https://just-ask-chat-bot.vercel.app'],
   methods: ['GET', 'POST'],
@@ -19,39 +15,33 @@ app.use(cors({
 
 app.use(express.json());
 
-// Read API key
-const API_KEY = process.env.OPENROUTER_API_KEYS?.trim();
+const API_KEY = process.env.OPENROUTER_API_KEYS;
 
 if (!API_KEY) {
-  console.error("❌ No API key found. Make sure 'OPENROUTER_API_KEYS' is set in Render Environment.");
+  console.error("❌ No API key found. Make sure 'OPENROUTER_API_KEYS' is set.");
   process.exit(1);
 }
 
 console.log('✅ Loaded key:', API_KEY.slice(0, 12) + '...');
 
-const DEFAULT_AUTO_MODEL = 'mistralai/mixtral-8x7b-instruct';
+const DEFAULT_MODEL = 'mistralai/mixtral-8x7b-instruct';
 
 app.post('/chat', async (req, res) => {
   const { message, model } = req.body;
-
-  if (!message) {
-    return res.status(400).json({ error: 'Message is required' });
-  }
-
-  const selectedModel = model === 'openrouter/auto' ? DEFAULT_AUTO_MODEL : model;
+  if (!message) return res.status(400).json({ error: 'Message is required' });
 
   try {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: selectedModel,
+        model: model === 'openrouter/auto' ? DEFAULT_MODEL : model,
         messages: [{ role: 'user', content: message }],
-        max_tokens: 50,
+        max_tokens: 100,
         temperature: 0.7
       },
       {
         headers: {
-          'Authorization': `Bearer ${API_KEY}`,
+          Authorization: `Bearer ${API_KEY}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app/',
           'User-Agent': 'JustAskChatBot (https://just-ask-chat-bot.vercel.app/)'
@@ -59,23 +49,18 @@ app.post('/chat', async (req, res) => {
       }
     );
 
-    const reply = response.data.choices[0].message.content;
-    const usedModel = response.data.model;
-
-    return res.json({ reply, model: usedModel });
-
+    return res.json({
+      reply: response.data.choices[0].message.content,
+      model: response.data.model
+    });
   } catch (err) {
     const errMsg = err.response?.data?.error?.message || err.message;
     console.warn(`❌ API request failed — ${errMsg}`);
-    return res.status(500).json({
-      reply: `[!] Request failed — ${errMsg}`,
-      model: selectedModel,
-    });
+    return res.status(500).json({ reply: `[!] Request failed — ${errMsg}` });
   }
 });
 
-// Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
