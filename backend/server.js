@@ -48,10 +48,9 @@ app.post('/chat', async (req, res) => {
       {
         headers: {
           'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app',
-          'User-Agent': 'JustAskChatBot (https://just-ask-chat-bot.vercel.app)'
+          'Content-Type': 'application/json'
         }
+
       }
     );
 
