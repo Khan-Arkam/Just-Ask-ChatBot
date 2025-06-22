@@ -55,7 +55,6 @@ app.post('/chat', async (req, res) => {
       }
     );
 
-
     const reply = response.data.choices[0].message.content;
     const usedModel = response.data.model;
     return res.json({ reply, model: usedModel });
