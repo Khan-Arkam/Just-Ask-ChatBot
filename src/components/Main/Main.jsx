@@ -78,7 +78,7 @@ const Main = () => {
     return () => clearInterval(interval);
   }, [doneTyping, lastAssistantMsg]);
 
- 
+
   useEffect(() => {
     if (doneTyping) {
       endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -105,7 +105,7 @@ const Main = () => {
         {!showResult ? (
           <>
             <div className="greet">
-              <p><span>Hello, User.</span></p>
+              <p><span>Hello, Friend.</span></p>
               <p>How can I help you today?</p>
             </div>
             <div className="cards">
@@ -163,7 +163,10 @@ const Main = () => {
             })}
             {isLimitReached && (
               <div className="chat-limit-message">
-                <p>🔒 You’ve reached the 10 message limit. Please start a new chat.</p>
+                <p>🔒 You’ve reached the 10 message limit.</p>
+                <button className="new-chat-btn" onClick={startNewChat}>
+                  ➕ Start New Chat
+                </button>
               </div>
             )}
             <div ref={endOfMessagesRef} />
