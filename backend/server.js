@@ -16,6 +16,7 @@ app.use(cors({
 app.use(express.json());
 
 const API_KEYS = process.env.OPENROUTER_API_KEYS?.split(',').map(k => k.trim()) || [];
+console.log("Loaded API Keys:", API_KEYS.map(k => k.slice(0, 12) + '...'));
 
 if (API_KEYS.length === 0) {
   console.error("❌ No API keys found. Set OPENROUTER_API_KEYS in .env.");
@@ -73,11 +74,12 @@ app.post('/chat', async (req, res) => {
     } catch (err) {
       const status = err.response?.status;
       const errMsg = err.response?.data?.error?.message || err.message;
-      console.warn(`❌ Key failed: ${apiKey.slice(0, 12)}... — ${errMsg}`);
 
-      if (status !== 402) {
-        lastError = errMsg;
-        break;
+      console.warn(`❌ Key failed: ${key.slice(0, 12)}... — ${errMsg}`);
+
+      if (status !== 402) { 
+        errorMessage = errMsg;
+        break; 
       }
     }
   }
