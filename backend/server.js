@@ -42,8 +42,8 @@ app.post('/chat', async (req, res) => {
       {
         model: selectedModel,
         messages: [{ role: 'user', content: message }],
-        max_tokens: maxTokens,
-        temperature,
+        max_tokens: 50,
+        temperature: 0.7,
       },
       {
         headers: {
@@ -54,6 +54,7 @@ app.post('/chat', async (req, res) => {
         }
       }
     );
+
 
     const reply = response.data.choices[0].message.content;
     const usedModel = response.data.model;
