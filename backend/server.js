@@ -49,13 +49,14 @@ app.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${API_KEY}`,
+          'Authorization': `Bearer ${key}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app',
-          'User-Agent': 'JustAskChatBot (https://just-ask-chat-bot.vercel.app)',
-        },
+          'User-Agent': 'JustAskChatBot (https://just-ask-chat-bot.vercel.app)'
+        }
       }
     );
+
 
     const reply = response.data.choices[0].message.content;
     const usedModel = response.data.model;
