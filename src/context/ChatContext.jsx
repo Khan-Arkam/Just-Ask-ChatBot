@@ -68,6 +68,7 @@ const ContextProvider = ({ children }) => {
     setLoading(true);
 
     try {
+      console.log("📡 Sending to:", `${BACKEND_URL}/chat`);
       const res = await axios.post(`${BACKEND_URL}/chat`, { message: prompt, model });
       const content = res.data.reply.trim();
       const used = res.data.model || model;
