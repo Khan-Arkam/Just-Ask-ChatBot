@@ -3,11 +3,12 @@ import cors from 'cors';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-// Always load .env in case it's needed (local or Render secret file)
+// Load environment variables (from .env or Render secret)
 dotenv.config();
 
 const app = express();
 
+// CORS for frontend
 app.use(cors({
   origin: ['https://just-ask-chat-bot.vercel.app'],
   methods: ['GET', 'POST'],
@@ -16,11 +17,11 @@ app.use(cors({
 
 app.use(express.json());
 
-const API_KEY = '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';
+// ✅ Use environment variable or fallback to hardcoded key (not recommended for production)
+const API_KEY = process.env.OPENROUTER_API_KEYS?.trim() || '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';
 
 if (!API_KEY) {
   console.error("❌ No API key found. Make sure 'OPENROUTER_API_KEYS' is set.");
-  console.log("🔍 ENV KEY:", process.env.OPENROUTER_API_KEYS);
   process.exit(1);
 }
 
@@ -28,6 +29,7 @@ console.log('✅ Loaded key:', API_KEY.slice(0, 12) + '...');
 
 const DEFAULT_AUTO_MODEL = 'mistralai/mixtral-8x7b-instruct';
 
+// Main chat endpoint
 app.post('/chat', async (req, res) => {
   const { message, model } = req.body;
 
@@ -49,9 +51,10 @@ app.post('/chat', async (req, res) => {
       {
         headers: {
           'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'User-Agent': 'JustAskBot (https://just-ask-chat-bot.vercel.app)',
+          'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app'
         }
-
       }
     );
 
@@ -69,6 +72,24 @@ app.post('/chat', async (req, res) => {
   }
 });
 
+// ✅ /test route to validate API key from browser
+app.get('/test', async (req, res) => {
+  try {
+    const response = await axios.get('https://openrouter.ai/api/v1/models', {
+      headers: {
+        'Authorization': `Bearer ${API_KEY}`,
+        'User-Agent': 'JustAskBot (https://just-ask-chat-bot.vercel.app)',
+        'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app'
+      }
+    });
+    res.json({ models: response.data });
+  } catch (err) {
+    console.error("❌ Test failed:", err.response?.data || err.message);
+    res.status(500).json({ error: err.response?.data || err.message });
+  }
+});
+
+// Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
