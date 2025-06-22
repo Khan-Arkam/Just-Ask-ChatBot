@@ -20,6 +20,7 @@ const API_KEY = process.env.OPENROUTER_API_KEYS?.trim();
 
 if (!API_KEY) {
   console.error("❌ No API key found. Make sure 'OPENROUTER_API_KEYS' is set.");
+  console.log("🔍 ENV KEY:", process.env.OPENROUTER_API_KEYS);
   process.exit(1);
 }
 
