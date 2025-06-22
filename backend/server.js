@@ -42,12 +42,12 @@ app.post('/chat', async (req, res) => {
       {
         model: selectedModel,
         messages: [{ role: 'user', content: message }],
-        max_tokens: 50,
-        temperature: 0.7,
+        max_tokens: maxTokens,
+        temperature,
       },
       {
         headers: {
-          Authorization: `Bearer ${API_KEY}`,
+          'Authorization': `Bearer ${API_KEY}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app',
           'User-Agent': 'JustAskChatBot (https://just-ask-chat-bot.vercel.app)'
