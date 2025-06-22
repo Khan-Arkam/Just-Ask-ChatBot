@@ -2,12 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
 
+// Load environment variables in development
 if (process.env.NODE_ENV !== 'production') {
   const dotenv = await import('dotenv');
   dotenv.config();
 }
 
 const app = express();
+
+// Enable CORS for Vercel frontend
 app.use(cors({
   origin: ['https://just-ask-chat-bot.vercel.app'],
   methods: ['GET', 'POST'],
@@ -16,6 +19,7 @@ app.use(cors({
 
 app.use(express.json());
 
+// Load API key
 const API_KEY = process.env.OPENROUTER_API_KEYS?.trim();
 
 if (!API_KEY) {
@@ -25,8 +29,10 @@ if (!API_KEY) {
 
 console.log('✅ Loaded key:', API_KEY.slice(0, 12) + '...');
 
+// Default model for auto mode
 const DEFAULT_AUTO_MODEL = 'mistralai/mixtral-8x7b-instruct';
 
+// Chat endpoint
 app.post('/chat', async (req, res) => {
   const { message, model } = req.body;
 
@@ -49,14 +55,13 @@ app.post('/chat', async (req, res) => {
       },
       {
         headers: {
-          'Authorization': `Bearer ${key}`,
+          'Authorization': `Bearer ${API_KEY}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': 'https://just-ask-chat-bot.vercel.app',
           'User-Agent': 'JustAskChatBot (https://just-ask-chat-bot.vercel.app)'
         }
       }
     );
-
 
     const reply = response.data.choices[0].message.content;
     const usedModel = response.data.model;
@@ -72,6 +77,7 @@ app.post('/chat', async (req, res) => {
   }
 });
 
+// Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
