@@ -34,7 +34,7 @@ const Main = () => {
   const maxQuestions = 10;
   const isLimitReached = questionCount >= maxQuestions;
 
-  // Chat switch reset + rehydrate assistant typing state
+
   useEffect(() => {
     if (!lastAssistantMsg) return;
 
@@ -55,7 +55,6 @@ const Main = () => {
     }
   }, [activeChatId, lastAssistantMsg]);
 
-  // Typing animation effect
   useEffect(() => {
     if (!lastAssistantMsg || doneTyping) return;
 
@@ -79,7 +78,7 @@ const Main = () => {
     return () => clearInterval(interval);
   }, [doneTyping, lastAssistantMsg]);
 
-  // Auto scroll
+ 
   useEffect(() => {
     if (doneTyping) {
       endOfMessagesRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -106,7 +105,7 @@ const Main = () => {
         {!showResult ? (
           <>
             <div className="greet">
-              <p><span>Hello, Arkam.</span></p>
+              <p><span>Hello, User.</span></p>
               <p>How can I help you today?</p>
             </div>
             <div className="cards">
