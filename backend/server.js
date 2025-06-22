@@ -6,6 +6,7 @@ import axios from 'axios';
 dotenv.config();
 
 const app = express();
+
 app.use(cors({
   origin: ['https://just-ask-chat-bot.vercel.app'],
   methods: ['GET', 'POST'],
@@ -21,12 +22,18 @@ if (API_KEYS.length === 0) {
   process.exit(1);
 }
 
+let keyIndex = 0;
+const getNextApiKey = () => {
+  const key = API_KEYS[keyIndex];
+  keyIndex = (keyIndex + 1) % API_KEYS.length;
+  return key;
+};
+
 const freeModels = [
   'mistralai/mistral-small',
   'mistralai/mixtral-8x7b-instruct',
   'nousresearch/nous-hermes-2-mixtral-8x7b-dpo',
 ];
-
 const DEFAULT_AUTO_MODEL = 'mistralai/mixtral-8x7b-instruct';
 
 app.post('/chat', async (req, res) => {
@@ -34,15 +41,15 @@ app.post('/chat', async (req, res) => {
   if (!message) return res.status(400).json({ error: 'Message required' });
 
   const selectedModel = model === 'openrouter/auto' ? DEFAULT_AUTO_MODEL : model;
-
   const maxTokens = 50;
   const temperature = 0.7;
 
   let reply = null;
   let usedModel = null;
-  let errorMessage = null;
+  let lastError = null;
 
-  for (let key of API_KEYS) {
+  for (let i = 0; i < API_KEYS.length; i++) {
+    const apiKey = getNextApiKey();
     try {
       const response = await axios.post(
         'https://openrouter.ai/api/v1/chat/completions',
@@ -54,7 +61,7 @@ app.post('/chat', async (req, res) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${key}`,
+            Authorization: `Bearer ${apiKey}`,
           },
         }
       );
@@ -66,23 +73,22 @@ app.post('/chat', async (req, res) => {
     } catch (err) {
       const status = err.response?.status;
       const errMsg = err.response?.data?.error?.message || err.message;
-
-      console.warn(`❌ Key failed: ${key.slice(0, 12)}... — ${errMsg}`);
+      console.warn(`❌ Key failed: ${apiKey.slice(0, 12)}... — ${errMsg}`);
 
       if (status !== 402) {
-        errorMessage = errMsg;
+        lastError = errMsg;
         break;
       }
     }
   }
 
   return res.status(500).json({
-    reply: `[!] All API keys failed. ${errorMessage || 'Insufficient credits.'}`,
+    reply: `[!] All API keys failed. ${lastError || 'Insufficient credits or server error.'}`,
     model: selectedModel,
   });
 });
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
