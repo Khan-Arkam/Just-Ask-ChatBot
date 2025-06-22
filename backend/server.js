@@ -16,7 +16,7 @@ app.use(cors({
 
 app.use(express.json());
 
-const API_KEY = process.env.OPENROUTER_API_KEYS?.trim();
+const API_KEY = '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';
 
 if (!API_KEY) {
   console.error("❌ No API key found. Make sure 'OPENROUTER_API_KEYS' is set.");
