@@ -34,6 +34,19 @@ app.get('/test', async (req, res) => {
   }
 });
 
+app.get('/test-key', async (req, res) => {
+  try {
+    const r = await axios.get('https://openrouter.ai/api/v1/models', {
+      headers: { Authorization: `Bearer ${API_KEY}` }
+    });
+    res.json({ ok: true, count: r.data.data.length });
+  } catch(e) {
+    console.error("🔴 /test-key failed:", e.response?.data);
+    res.status(500).json({ ok: false, error: e.response?.data });
+  }
+});
+
+
 app.post('/chat', async (req, res) => {
   const { message, model } = req.body;
   const modelToUse = model === 'openrouter/auto'
