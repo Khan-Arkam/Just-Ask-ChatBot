@@ -22,11 +22,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     } else {
       startNewChat();
     }
-    setIsOpen(false); // close sidebar on mobile
+    setIsOpen(false);
   };
 
   return (
-    <div className={`sidebar ${isOpen ? 'expanded' : 'collapsed'} ${isOpen ? 'mobile-visible' : ''}`}>
+    <div className={`sidebar ${isOpen ? 'expanded mobile-visible' : 'collapsed'}`}>
       <div className="top">
         <img
           onClick={() => setIsOpen(prev => !prev)}

@@ -1,4 +1,3 @@
-// main.jsx
 import React, { useContext, useEffect, useRef, useState, useMemo } from 'react';
 import './Main.css';
 import { assets } from '../../assets/assets';
@@ -7,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
-const Main = () => {
+const Main = ({ toggleSidebar }) => {
   const {
     messages, onSend, model, setModel,
     modelUsed, blocking, activeChatId
@@ -102,6 +101,7 @@ const Main = () => {
           <img src={assets.user_icon} alt="user" />
         </div>
       </div>
+
       <div className="main-container">
         {!showResult ? (
           <>
