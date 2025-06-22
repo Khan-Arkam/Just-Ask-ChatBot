@@ -1,12 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import axios from 'axios';
 
-dotenv.config();
+// ✅ Only load dotenv in local dev mode
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = await import('dotenv');
+  dotenv.config();
+}
 
 const app = express();
-
 app.use(cors({
   origin: ['https://just-ask-chat-bot.vercel.app'],
   methods: ['GET', 'POST'],
@@ -18,9 +20,11 @@ app.use(express.json());
 const API_KEYS = process.env.OPENROUTER_API_KEYS?.split(',').map(k => k.trim()) || [];
 
 if (API_KEYS.length === 0) {
-  console.error("❌ No API keys found. Set OPENROUTER_API_KEYS in .env.");
+  console.error("❌ No API keys found. Make sure 'OPENROUTER_API_KEYS' is set.");
   process.exit(1);
 }
+
+console.log('✅ Loaded keys:', API_KEYS.map(k => k.slice(0, 12) + '...').join(', '));
 
 const DEFAULT_AUTO_MODEL = 'mistralai/mixtral-8x7b-instruct';
 
