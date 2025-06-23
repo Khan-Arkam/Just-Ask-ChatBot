@@ -6,8 +6,7 @@
   background-color: #f0f4f9;
   transition: width 0.3s ease;
   overflow-y: auto;
-  overflow-x: hidden;
-  /* Prevent horizontal scroll */
+  overflow-x: hidden; /* Prevent horizontal scroll */
   position: relative;
 }
 
@@ -33,7 +32,7 @@
 }
 
 .sidebar .new-chat {
-  margin: 0 0 20px 20px;
+  margin: 0 auto 20px auto;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -121,22 +120,20 @@
     opacity: 0;
     transform: translateY(-5px);
   }
-
   10% {
     opacity: 1;
     transform: translateY(0);
   }
-
   90% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
     transform: translateY(-5px);
   }
 }
 
+/* Hamburger for desktop only */
 .sidebar .hamburger {
   width: 24px;
   height: 24px;
@@ -147,6 +144,7 @@
   z-index: 10;
 }
 
+/* MOBILE ONLY OVERRIDES */
 @media (max-width: 600px) {
   .sidebar {
     position: fixed;
@@ -163,10 +161,21 @@
     transform: translateX(0);
   }
 
+  /* Hide desktop hamburger in mobile */
   .sidebar .hamburger {
     display: none;
   }
 
+  /* Mobile hamburger separately placed outside the Sidebar (in Sidebar.jsx) */
+  .mobile-toggle-icon {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 2000;
+  }
 }
 
 .mobile-sidebar-header {
@@ -182,5 +191,6 @@
 }
 
 .sidebar .top {
-  padding-top: 60px;
+  padding-top: 60px; 
 }
+
