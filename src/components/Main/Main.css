@@ -304,6 +304,6 @@
 @media (min-width: 600px) {
   .mobile-toggle-icon {
     display: none !important;
-    text-align: center;
+    margin-right: 20px;
   }
 }
