@@ -85,25 +85,24 @@ const Main = ({ toggleSidebar }) => {
     }
   };
 
-  return (
-    <div className="main">
-      <div className="nav">
-        <div className="mobile-menu-toggle">
-          <img
-            src={assets.menu_icon}
-            alt="menu"
-            className="mobile-toggle-icon"
-            onClick={toggleSidebar}
-          />
-        </div>
-
-        <p>Chatbot</p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <img src={assets.user_icon} alt="user" />
-        </div>
+ return (
+  <div className="main">
+    <div className="nav">
+      <div className="mobile-menu-toggle">
+        <img
+          src={assets.menu_icon}
+          alt="menu"
+          className="mobile-toggle-icon"
+          onClick={toggleSidebar}
+        />
       </div>
+      <p>Chatbot</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <img src={assets.user_icon} alt="user" />
+      </div>
+    </div>
 
-    <div className="main-content-wrapper" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}></div>
+    <div className="main-body">
       <div className="main-container">
         {!showResult ? (
           <>
@@ -167,46 +166,46 @@ const Main = ({ toggleSidebar }) => {
             <div ref={endOfMessagesRef} />
           </div>
         )}
+      </div>
 
-        <div className="main-bottom">
-          <div className="search-box">
-            <select value={model} onChange={(e) => setModel(e.target.value)} className="model-select">
-              <option value="mistralai/mistral-small">Auto (Default: Mistral Small)</option>
-              <option value="openai/gpt-3.5-turbo">GPT‑3.5 Turbo (Free)</option>
-              <option value="anthropic/claude-3.5-sonnet">Claude 3.5 (Free Tier)</option>
-              <option value="google/gemini-pro">Gemini Pro (Free Tier)</option>
-              <option value="mistralai/mixtral-8x7b-instruct">Mixtral 8x7B (Free)</option>
-              <option value="nousresearch/nous-hermes-2-mixtral-8x7b-dpo">Hermes 2 (Free)</option>
-            </select>
+      <div className="main-bottom">
+        <div className="search-box">
+          <select value={model} onChange={(e) => setModel(e.target.value)} className="model-select">
+            <option value="mistralai/mistral-small">Auto (Default: Mistral Small)</option>
+            <option value="openai/gpt-3.5-turbo">GPT‑3.5 Turbo (Free)</option>
+            <option value="anthropic/claude-3.5-sonnet">Claude 3.5 (Free Tier)</option>
+            <option value="google/gemini-pro">Gemini Pro (Free Tier)</option>
+            <option value="mistralai/mixtral-8x7b-instruct">Mixtral 8x7B (Free)</option>
+            <option value="nousresearch/nous-hermes-2-mixtral-8x7b-dpo">Hermes 2 (Free)</option>
+          </select>
 
-            <input
-              type="text"
-              placeholder={isLimitReached ? "Chat limit reached. Please start a new conversation." : "Ask anything"}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => !isLimitReached && e.key === 'Enter' && handleSend()}
-              disabled={isLimitReached}
+          <input
+            type="text"
+            placeholder={isLimitReached ? "Chat limit reached. Please start a new conversation." : "Ask anything"}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => !isLimitReached && e.key === 'Enter' && handleSend()}
+            disabled={isLimitReached}
+          />
+          <div>
+            <img src={assets.gallery_icon} alt="Gallery" />
+            <img src={assets.mic_icon} alt="Mic" />
+            <img
+              src={assets.send_icon}
+              alt="Send"
+              onClick={handleSend}
+              className={`send-icon ${input.trim() === '' || isLimitReached ? 'hidden' : 'visible'}`}
+              style={{ cursor: isLimitReached ? 'not-allowed' : 'pointer' }}
             />
-            <div>
-              <img src={assets.gallery_icon} alt="Gallery" />
-              <img src={assets.mic_icon} alt="Mic" />
-              <img
-                src={assets.send_icon}
-                alt="Send"
-                onClick={handleSend}
-                className={`send-icon ${input.trim() === '' || isLimitReached ? 'hidden' : 'visible'}`}
-                style={{ cursor: isLimitReached ? 'not-allowed' : 'pointer' }}
-              />
-            </div>
           </div>
-          <p className="bottom-info">
-            The Chatbot may display inaccurate info, including about people, so double-check its responses.
-          </p>
         </div>
+        <p className="bottom-info">
+          The Chatbot may display inaccurate info, including about people, so double-check its responses.
+        </p>
       </div>
     </div>
-   
-  );
+  </div>
+);
 };
 
 export default Main;
