@@ -96,7 +96,7 @@ const Main = ({ toggleSidebar }) => {
           onClick={toggleSidebar}
         />
       </div>
-      <p>Just-Ask Chatbot</p>
+      <p className='nav-header'>Just-Ask Chatbot</p>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <img src={assets.user_icon} alt="user" />
       </div>
