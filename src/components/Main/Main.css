@@ -13,13 +13,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 70px;
   padding: 0 20px;
   border-bottom: 1px solid #eee;
 }
 
 .main .nav-header{
-  font-size: 38px;
+  font-size: 22px;
   color: #29282a;
 
 }
@@ -40,7 +40,7 @@
   margin-right: 10px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .mobile-toggle-icon {
     display: inline;
   }
@@ -304,5 +304,6 @@
 @media (min-width: 600px) {
   .mobile-toggle-icon {
     display: none !important;
+    text-align: center;
   }
 }
