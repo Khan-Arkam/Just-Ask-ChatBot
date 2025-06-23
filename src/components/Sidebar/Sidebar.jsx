@@ -26,7 +26,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   };
 
   return (
-    <div className={`sidebar ${isOpen ? 'expanded mobile-visible' : 'collapsed'}`}>
+    <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
       <div className="top">
         <img
           onClick={() => setIsOpen(prev => !prev)}

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar/Sidebar';
 import Main from './components/Main/Main';
-import ContextProvider from './context/ChatContext';
+import './App.css';
 
 const App = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setSidebarOpen(prev => !prev);
 
   return (
-    <ContextProvider>
-      <div className="app-container" style={{ display: 'flex' }}>
-        <Sidebar isOpen={isSidebarOpen} setIsOpen={setSidebarOpen} />
-        <Main toggleSidebar={() => setSidebarOpen(prev => !prev)} />
-      </div>
-    </ContextProvider>
+    <div className="app">
+      <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+      <Main toggleSidebar={toggleSidebar} />
+    </div>
   );
 };
 

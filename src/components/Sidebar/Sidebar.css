@@ -126,14 +126,18 @@
 @media (max-width: 600px) {
   .sidebar {
     position: fixed;
+    left: 0;
     top: 0;
-    left: -260px;
-    width: 260px;
-    z-index: 1000;
-    height: 100vh;
-    transition: left 0.3s ease;
+    bottom: 0;
+    z-index: 999;
+    background: #f0f4f9;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
   }
 
+  .sidebar.open {
+    transform: translateX(0%);
+  }
   .sidebar.mobile-visible {
     left: 0;
     box-shadow: 2px 0 5px rgba(0,0,0,0.2);
