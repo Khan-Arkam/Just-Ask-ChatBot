@@ -34,7 +34,6 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-  margin-right: 10px;
 }
 
 @media (max-width: 768px) {
@@ -294,7 +293,9 @@
 
 @media (min-width: 600px) {
   .mobile-toggle-icon {
-    display: none !important;
+    display: block;
+    position: relative;
+    z-index: 500;
   }
 }
 
