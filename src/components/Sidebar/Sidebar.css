@@ -6,16 +6,9 @@
   background-color: #f0f4f9;
   transition: width 0.3s ease;
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  position: relative;
 }
-
-.sidebar .top {
-  padding-top: 50px;
-  flex-grow: 1;
-  overflow-y: auto;
-  padding-bottom: 10px;
-}
-
 
 .sidebar.collapsed {
   width: 60px;
@@ -54,7 +47,6 @@
 .sidebar .new-chat:hover {
   background-color: #e2e6eb;
 }
-
 
 .sidebar .recent {
   display: flex;
@@ -126,24 +118,23 @@
     opacity: 0;
     transform: translateY(-5px);
   }
-
   10% {
     opacity: 1;
     transform: translateY(0);
   }
-
   90% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
     transform: translateY(-5px);
   }
 }
 
+/* Hamburger for desktop only */
 .sidebar .hamburger {
   width: 24px;
+  height: 24px;
   position: absolute;
   top: 15px;
   left: 15px;
@@ -151,6 +142,7 @@
   z-index: 10;
 }
 
+/* MOBILE ONLY OVERRIDES */
 @media (max-width: 600px) {
   .sidebar {
     position: fixed;
@@ -160,25 +152,26 @@
     z-index: 1000;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+    width: 260px !important;
   }
 
   .sidebar.open {
     transform: translateX(0);
   }
 
+  /* Hide desktop hamburger in mobile */
   .sidebar .hamburger {
-    width: 24px;
-    margin: 10px 12px;
-    cursor: pointer;
+    display: none;
+  }
+
+  /* Mobile hamburger separately placed outside the Sidebar (in Sidebar.jsx) */
+  .mobile-toggle-icon {
     position: absolute;
     top: 15px;
     left: 15px;
-    z-index: 1001;
-  }
-
-
-  .sidebar.collapsed .hamburger {
-    left: 15px;
-    right: auto;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 2000;
   }
 }

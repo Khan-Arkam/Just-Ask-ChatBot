@@ -41,12 +41,25 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
 
-      <img
-        onClick={handleToggleClick}
-        className="hamburger"
-        src={assets.menu_icon}
-        alt="hamburger"
-      />
+      {!isMobile && (
+        <img
+          onClick={() => setExtended(prev => !prev)}
+          className="hamburger"
+          src={assets.menu_icon}
+          alt="menu"
+        />
+      )}
+
+      {isMobile && isOpen && (
+        <div style={{ position: 'absolute', top: '10px', left: '15px', zIndex: 1000 }}>
+          <img
+            onClick={toggleSidebar}
+            className="mobile-toggle-icon"
+            src={assets.menu_icon}
+            alt="menu"
+          />
+        </div>
+      )}
 
       <div className="top">
         <div className="new-chat" onClick={handleNewChat}>
