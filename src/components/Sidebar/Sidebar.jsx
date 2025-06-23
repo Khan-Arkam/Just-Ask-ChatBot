@@ -41,7 +41,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
 
-      {/* MOVE HAMBURGER HERE OUTSIDE OF .top */}
       <img
         onClick={handleToggleClick}
         className="hamburger"
@@ -50,7 +49,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       />
 
       <div className="top">
-        {/* NEW CHAT */}
         <div className="new-chat" onClick={handleNewChat}>
           <img src={assets.plus_icon} alt="" />
           {extended && <p>New Chat</p>}

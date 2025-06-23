@@ -40,7 +40,7 @@
   margin-right: 10px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .mobile-toggle-icon {
     display: inline;
   }
@@ -304,6 +304,5 @@
 @media (min-width: 600px) {
   .mobile-toggle-icon {
     display: none !important;
-    margin-right: 20px;
   }
 }
