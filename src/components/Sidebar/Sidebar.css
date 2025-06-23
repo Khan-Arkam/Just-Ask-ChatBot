@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: #f0f4f9;
-  transition: width 0.3s ease, padding 0.3s ease;
-  overflow-y: auto; /* <-- Allow scrolling */
+  transition: width 0.3s ease;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 
@@ -18,79 +18,68 @@
 }
 
 .sidebar.collapsed p {
-    opacity: 0;
-    transition: opacity 0.2s ease;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
+
 .sidebar.expanded p {
-    opacity: 1;
+  opacity: 1;
 }
 
-
-.sidebar img{
-    width: 20px;
+.sidebar img {
+  width: 20px;
 }
 
-.sidebar .menu{
-    display: block;
-    margin-left: 10px;
-    cursor: pointer;
+.sidebar .new-chat {
+  margin-top: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  background-color: #e6eaf1;
+  border-radius: 50px;
+  font-size: 14px;
+  color: grey;
+  cursor: pointer;
 }
 
-.sidebar .new-chat{
-    margin-top: 50px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 15px;
-    background-color: #e6eaf1;
-    border-radius: 50px;
-    font-size: 14px;
-    color: grey;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-
+.sidebar .recent {
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 1.5s;
 }
 
-.sidebar .recent{
-    display: flex;
-    flex-direction: column; 
-    transition: opacity 0.3s ease;
-    animation: fadeIn 1.5s;
-
+.sidebar .recent-title {
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
-.sidebar .recent-title{
-    margin-top: 30px;
-    margin-bottom: 20px;
+.sidebar .recent-entry {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  padding: 10px;
+  padding-right: 40px;
+  border-radius: 50px;
+  color: #282828;
+  cursor: pointer;
 }
 
-.sidebar .recent-entry{
-    display: flex;
-    align-items: start;
-    gap: 10px;
-    padding: 10px;
-    padding-right: 40px;
-    border-radius: 50px;
-    color: #282828;
-    cursor: pointer;
-
+.sidebar .recent-entry:hover {
+  background-color: #e2e6eb;
 }
 
-.sidebar .recent-entry:hover{
-    background-color: #e2e6eb;
-}
-
-.sidebar .bottom{
-    display: flex;
-    flex-direction: column;
+.sidebar .bottom {
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar .bottom-item {
-    padding-right: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .recent-entry.active {
@@ -101,8 +90,8 @@
 
 .floating-warning-global {
   position: fixed;
-  top: 80px; /* adjust if needed */
-  left: 70px; /* places beside collapsed icon */
+  top: 80px;
+  left: 70px;
   background-color: #fff3cd;
   color: #856404;
   border: 1px solid #ffeeba;
@@ -123,6 +112,12 @@
   100% { opacity: 0; transform: translateY(-5px); }
 }
 
+.sidebar .hamburger {
+  width: 24px;
+  margin-left: 12px;
+  cursor: pointer;
+}
+
 @media (max-width: 600px) {
   .sidebar {
     position: fixed;
@@ -138,12 +133,15 @@
     transform: translateX(0);
   }
 
-  .sidebar.mobile-visible {
-    left: 0;
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  .sidebar .hamburger {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1001;
+  }
+
+  .sidebar.collapsed .hamburger {
+    left: 15px;
+    right: auto;
   }
 }
-
-
-
-

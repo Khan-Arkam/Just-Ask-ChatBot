@@ -4,7 +4,8 @@ import { assets } from '../../assets/assets';
 import { ChatContext } from '../../context/ChatContext';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
-  const [extended, setExtended] = useState(false); // this is missing in your version
+  const isMobile = window.innerWidth <= 600;
+  const [extended, setExtended] = useState(!isMobile);
   const [warning, setWarning] = useState('');
 
   const {
@@ -15,8 +16,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     activeChatId
   } = useContext(ChatContext);
 
-  const userMsgCount = messages.filter(msg => msg.role === 'user').length;
-  const remaining = 10 - userMsgCount;
+  const remaining = 10 - messages.filter(msg => msg.role === 'user').length;
 
   const handleNewChat = () => {
     if (remaining > 0 && activeChatId) {
@@ -28,19 +28,22 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     }
   };
 
-  // Close sidebar when route/chat changes (optional)
   useEffect(() => {
-    if (isOpen) toggleSidebar(); // auto-close sidebar on mobile
+    if (isMobile && isOpen) toggleSidebar();
   }, [activeChatId]);
+
+  const handleToggleClick = () => {
+    isMobile ? toggleSidebar() : setExtended(prev => !prev);
+  };
 
   return (
     <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
       <div className="top">
         <img
-          onClick={() => setExtended(prev => !prev)}
-          className="menu"
+          onClick={handleToggleClick}
+          className="hamburger"
           src={assets.menu_icon}
-          alt="menu"
+          alt="hamburger"
         />
 
         <div className="new-chat" onClick={handleNewChat}>
@@ -76,11 +79,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
       </div>
 
-      {warning && (
-        <div className="floating-warning-global">
-          {warning}
-        </div>
-      )}
+      {warning && <div className="floating-warning-global">{warning}</div>}
     </div>
   );
 };

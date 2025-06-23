@@ -96,6 +96,7 @@ const Main = ({ toggleSidebar }) => {
             onClick={toggleSidebar}
           />
         </div>
+
         <p>Chatbot</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <img src={assets.user_icon} alt="user" />
