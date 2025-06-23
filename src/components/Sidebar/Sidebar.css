@@ -49,13 +49,10 @@
   font-size: 14px;
   color: grey;
   cursor: pointer;
-  margin-left: 5px;
-  margin-top: 5px;
-  margin-right: 5px;
 }
 
 .sidebar .new-chat:hover {
-  background-color: #c4c8cd;
+  background-color: #e2e6eb;
 }
 
 
