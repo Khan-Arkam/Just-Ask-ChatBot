@@ -51,6 +51,7 @@
   cursor: pointer;
   margin-left: 5px;
   margin-top: 5px;
+  margin-right: 5px;
 }
 
 .sidebar .new-chat:hover {
