@@ -5,7 +5,7 @@ import { ChatContext } from '../../context/ChatContext';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const isMobile = window.innerWidth <= 600;
-  const [extended, setExtended] = useState(!isMobile);
+  const [extended, setExtended] = useState(false);
   const [warning, setWarning] = useState('');
 
   const {
@@ -29,8 +29,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   };
 
   useEffect(() => {
-    if (isMobile && isOpen) toggleSidebar();
-  }, [activeChatId]);
+    if (isMobile && isOpen && !warning) {
+      toggleSidebar();
+    }
+  }, [activeChatId, warning]);
 
   const handleToggleClick = () => {
     isMobile ? toggleSidebar() : setExtended(prev => !prev);
@@ -51,7 +53,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           {extended && <p>New Chat</p>}
         </div>
 
-        {extended && (
+        {(extended || isMobile) && (
           <div className="recent">
             <p className="recent-title">Recent</p>
             {pastChats.map((chat) => (

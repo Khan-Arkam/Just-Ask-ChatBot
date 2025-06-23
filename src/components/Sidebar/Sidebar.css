@@ -1,5 +1,5 @@
 .sidebar {
-  height: 100vh;
+  max-height: calc(100vh - 130px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -106,10 +106,24 @@
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(-5px); }
-  10% { opacity: 1; transform: translateY(0); }
-  90% { opacity: 1; }
-  100% { opacity: 0; transform: translateY(-5px); }
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
 }
 
 .sidebar .hamburger {
@@ -134,11 +148,15 @@
   }
 
   .sidebar .hamburger {
+    width: 24px;
+    margin: 10px 12px;
+    cursor: pointer;
     position: absolute;
     top: 15px;
-    right: 15px;
+    left: 15px;
     z-index: 1001;
   }
+
 
   .sidebar.collapsed .hamburger {
     left: 15px;

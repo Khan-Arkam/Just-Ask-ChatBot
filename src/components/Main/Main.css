@@ -31,6 +31,7 @@
   padding-bottom: 130px;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  position: relative;
 }
 
 .main-container::-webkit-scrollbar {
@@ -103,6 +104,10 @@
   margin: auto;
   z-index: 10;
   backdrop-filter: blur(10px);
+  bottom: 0;
+  left: 0;
+  right: 0;
+
 }
 
 .search-box {
@@ -410,8 +415,3 @@
     justify-content: space-between;
   }
 }
-
-
-
-
-
