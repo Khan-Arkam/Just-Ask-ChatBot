@@ -103,6 +103,7 @@ const Main = ({ toggleSidebar }) => {
         </div>
       </div>
 
+    <div className="main-content-wrapper" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}></div>
       <div className="main-container">
         {!showResult ? (
           <>
@@ -204,6 +205,7 @@ const Main = ({ toggleSidebar }) => {
         </div>
       </div>
     </div>
+   
   );
 };
 
