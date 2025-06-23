@@ -38,9 +38,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     isMobile ? toggleSidebar() : setExtended(prev => !prev);
   };
 
+  useEffect(() => {
+  if (isMobile) setExtended(true);
+}, []);
+
   return (
     <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
-      {/* DESKTOP HAMBURGER */}
       {!isMobile && (
         <img
           onClick={handleToggleClick}
@@ -48,17 +51,6 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           src={assets.menu_icon}
           alt="menu"
         />
-      )}
-
-      {isMobile && isOpen && (
-        <div className="mobile-sidebar-header">
-          <img
-            onClick={toggleSidebar}
-            className="mobile-toggle-icon"
-            src={assets.menu_icon}
-            alt="menu"
-          />
-        </div>
       )}
 
       <div className="top">

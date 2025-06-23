@@ -32,7 +32,7 @@
 }
 
 .sidebar .new-chat {
-  margin: 0 auto 20px auto;
+  margin: 0 0 20px 15px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
