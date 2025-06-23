@@ -34,12 +34,15 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-  margin-right: 10px;
+  position: relative;
+  z-index: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .mobile-toggle-icon {
-    display: inline;
+    display: inline-block;
+    position: relative; 
+    z-index: 0;         
   }
 }
 
