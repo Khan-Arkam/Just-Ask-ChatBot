@@ -42,7 +42,9 @@
   font-size: 14px;
   color: grey;
   cursor: pointer;
+  z-index: 1;
 }
+
 
 .sidebar .new-chat:hover {
   background-color: #e2e6eb;
@@ -175,3 +177,23 @@
     z-index: 2000;
   }
 }
+
+.mobile-sidebar-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 15px;
+  background: #f0f4f9;
+  width: 100%;
+  z-index: 2001;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid #ddd;
+  height: 60px;
+}
+
+.sidebar .top {
+  padding-top: 70px; 
+}
+

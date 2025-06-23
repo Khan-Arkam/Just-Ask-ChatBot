@@ -40,63 +40,65 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
+  {/* DESKTOP HAMBURGER */}
+  {!isMobile && (
+    <img
+      onClick={handleToggleClick}
+      className="hamburger"
+      src={assets.menu_icon}
+      alt="menu"
+    />
+  )}
 
-      {!isMobile && (
-        <img
-          onClick={() => setExtended(prev => !prev)}
-          className="hamburger"
-          src={assets.menu_icon}
-          alt="menu"
-        />
-      )}
-
-      {isMobile && isOpen && (
-        <div style={{ position: 'absolute', top: '10px', left: '15px', zIndex: 1000 }}>
-          <img
-            onClick={toggleSidebar}
-            className="mobile-toggle-icon"
-            src={assets.menu_icon}
-            alt="menu"
-          />
-        </div>
-      )}
-
-      <div className="top">
-        <div className="new-chat" onClick={handleNewChat}>
-          <img src={assets.plus_icon} alt="" />
-          {extended && <p>New Chat</p>}
-        </div>
-
-        {(extended || isMobile) && (
-          <div className="recent">
-            <p className="recent-title">Recent</p>
-            {pastChats.map((chat) => (
-              <div key={chat.chatId} className="recent-entry" onClick={() => loadChat(chat)}>
-                <img src={assets.message_icon} alt="" />
-                <p>{chat.title || 'Untitled'}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="bottom">
-        <div className="bottom-item recent-entry">
-          <img src={assets.question_icon} alt="" />
-          {extended && <p>Help</p>}
-        </div>
-        <div className="bottom-item recent-entry">
-          <img src={assets.history_icon} alt="" />
-          {extended && <p>Activity</p>}
-        </div>
-        <div className="bottom-item recent-entry">
-          <img src={assets.setting_icon} alt="" />
-          {extended && <p>Settings</p>}
-        </div>
-      </div>
-
-      {warning && <div className="floating-warning-global">{warning}</div>}
+  {/* MOBILE HAMBURGER (INSIDE SIDEBAR) */}
+  {isMobile && isOpen && (
+    <div className="mobile-sidebar-header">
+      <img
+        onClick={toggleSidebar}
+        className="mobile-toggle-icon"
+        src={assets.menu_icon}
+        alt="menu"
+      />
     </div>
+  )}
+
+  <div className="top">
+    {/* Push new-chat DOWN so it never overlaps mobile hamburger */}
+    <div className="new-chat" onClick={handleNewChat}>
+      <img src={assets.plus_icon} alt="" />
+      {(extended || isMobile) && <p>New Chat</p>}
+    </div>
+
+    {(extended || isMobile) && (
+      <div className="recent">
+        <p className="recent-title">Recent</p>
+        {pastChats.map((chat) => (
+          <div key={chat.chatId} className="recent-entry" onClick={() => loadChat(chat)}>
+            <img src={assets.message_icon} alt="" />
+            <p>{chat.title || 'Untitled'}</p>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <div className="bottom">
+    <div className="bottom-item recent-entry">
+      <img src={assets.question_icon} alt="" />
+      {extended && <p>Help</p>}
+    </div>
+    <div className="bottom-item recent-entry">
+      <img src={assets.history_icon} alt="" />
+      {extended && <p>Activity</p>}
+    </div>
+    <div className="bottom-item recent-entry">
+      <img src={assets.setting_icon} alt="" />
+      {extended && <p>Settings</p>}
+    </div>
+  </div>
+
+  {warning && <div className="floating-warning-global">{warning}</div>}
+</div>
   );
 
 };
