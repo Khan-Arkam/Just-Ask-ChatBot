@@ -193,7 +193,7 @@
 }
 
 /* Mobile tweaks */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .main-bottom {
     display: flex;
     flex-direction: column;
@@ -295,7 +295,7 @@
   color: #888;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 600px) {
   .mobile-toggle-icon {
     display: none !important;
   }
