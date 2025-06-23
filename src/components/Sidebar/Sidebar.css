@@ -179,21 +179,18 @@
 }
 
 .mobile-sidebar-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 10px 15px;
-  background: #f0f4f9;
+  position: relative;
   width: 100%;
-  z-index: 2001;
+  height: 60px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  padding-left: 15px;
+  background-color: #f0f4f9;
   border-bottom: 1px solid #ddd;
-  height: 60px;
+  z-index: 2001;
 }
 
 .sidebar .top {
-  padding-top: 70px; 
+  padding-top: 60px; 
 }
 
