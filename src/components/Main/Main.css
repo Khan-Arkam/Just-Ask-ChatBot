@@ -20,7 +20,9 @@
 
 .main .nav-header{
   font-size: 38px;
-  font-weight: bold;
+  background: -webkit-linear-gradient(16deg, #ab4bff, #f75041);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .main .nav img {
