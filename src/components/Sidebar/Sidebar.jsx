@@ -40,14 +40,17 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
-      <div className="top">
-        <img
-          onClick={handleToggleClick}
-          className="hamburger"
-          src={assets.menu_icon}
-          alt="hamburger"
-        />
 
+      {/* MOVE HAMBURGER HERE OUTSIDE OF .top */}
+      <img
+        onClick={handleToggleClick}
+        className="hamburger"
+        src={assets.menu_icon}
+        alt="hamburger"
+      />
+
+      <div className="top">
+        {/* NEW CHAT */}
         <div className="new-chat" onClick={handleNewChat}>
           <img src={assets.plus_icon} alt="" />
           {extended && <p>New Chat</p>}
@@ -84,6 +87,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       {warning && <div className="floating-warning-global">{warning}</div>}
     </div>
   );
+
 };
 
 export default Sidebar;

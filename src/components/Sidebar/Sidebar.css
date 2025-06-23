@@ -1,13 +1,21 @@
 .sidebar {
-  max-height: calc(100vh - 130px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100vh;
   background-color: #f0f4f9;
   transition: width 0.3s ease;
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.sidebar .top {
+  padding-top: 50px;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 10px;
+}
+
 
 .sidebar.collapsed {
   width: 60px;
@@ -31,7 +39,7 @@
 }
 
 .sidebar .new-chat {
-  margin-top: 50px;
+  margin: 0 auto 20px auto;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -70,8 +78,10 @@
 }
 
 .sidebar .bottom {
+  padding: 10px 0;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .sidebar .bottom-item {
@@ -128,8 +138,11 @@
 
 .sidebar .hamburger {
   width: 24px;
-  margin-left: 12px;
+  position: absolute;
+  top: 15px;
+  left: 15px;
   cursor: pointer;
+  z-index: 10;
 }
 
 @media (max-width: 600px) {

@@ -6,6 +6,7 @@
   flex-direction: column;
   overflow: hidden;
   font-family: 'Outfit', sans-serif;
+  position: relative;
 }
 
 .main .nav {
@@ -28,7 +29,7 @@
   width: 100%;
   margin: 0 auto;
   overflow-y: auto;
-  padding-bottom: 130px;
+  padding-bottom: 150px;
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
@@ -70,6 +71,7 @@
   height: 200px;
   padding: 15px;
   background-color: #f0f4f9;
+  margin-bottom: 30px;
   border-radius: 10px;
   position: relative;
   cursor: pointer;
