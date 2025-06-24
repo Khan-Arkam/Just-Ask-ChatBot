@@ -43,6 +43,7 @@
   color: grey;
   cursor: pointer;
   z-index: 1;
+  margin-right: 5px;
 }
 
 
@@ -193,4 +194,19 @@
 .sidebar .top {
   padding-top: 60px; 
 }
+
+.mobile-sidebar-close {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 3000;
+  background-color: transparent;
+}
+
+.mobile-close-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
 

@@ -39,11 +39,23 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   };
 
   useEffect(() => {
-  if (isMobile) setExtended(true);
-}, []);
+    if (isMobile) setExtended(true);
+  }, []);
 
   return (
     <div className={`sidebar ${extended ? 'expanded' : 'collapsed'} ${isOpen ? 'open' : ''}`}>
+      
+      {isMobile && isOpen && (
+        <div className="mobile-sidebar-close">
+          <img
+            onClick={toggleSidebar}
+            src={assets.close_icon}
+            alt="close"
+            className="mobile-close-icon"
+          />
+        </div>
+      )}
+      
       {!isMobile && (
         <img
           onClick={handleToggleClick}
