@@ -116,12 +116,13 @@ const ContextProvider = ({ children }) => {
         );
       }
     } catch (err) {
-      const fallback = `Error talking to ${model === 'mistralai/mistral-small' ? 'Chatbot' : model.split('/').pop()}`;
+      const displayName = model === 'openrouter/auto' || model === 'mistralai/mistral-small' ? 'Mistral Small' : model.split('/').pop();
+      const fallback = `Error talking to ${displayName}`;
       const failedMsgs = [...messages, userMsg, {
         role: 'assistant',
         content: fallback,
         loading: false,
-        modelUsed: model === 'mistralai/mistral-small' ? 'Chatbot' : model.split('/').pop(),
+        modelUsed: model === 'openrouter/auto' || model === 'mistralai/mistral-small' ? 'mistral-small' : model.split('/').pop(),
         msgId: uuidv4()
       }];
 
