@@ -17,8 +17,11 @@
 }
 
 .main .nav-header {
+  display: flex;
+  flex-direction: column;
   font-size: 22px;
   color: #29282a;
+  line-height: 1.2;
 }
 
 .main .nav img {
@@ -84,7 +87,7 @@
   padding: 20px 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .main .cards {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -219,9 +222,10 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  max-width: 1100px;
-  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 
 .chat-bubble {
   display: flex;
@@ -273,8 +277,8 @@
 }
 
 .chat-icon {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -398,4 +402,41 @@
 
 .reply-box::after {
   content: '';
+}
+
+.project-author {
+  font-size: 12px;
+  color: #777;
+  margin-top: 4px;
+  margin-left: 15px;
+}
+
+@media (max-width: 600px) {
+  .chat-bubble {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .user-bubble .chat-icon {
+    margin-right: -40px;
+  }
+
+  .assistant-bubble .chat-icon {
+    margin-left: 2px;
+  }
+
+  .user-bubble .chat-inner,
+  .assistant-bubble .chat-inner {
+    max-width: calc(100% - 40px);
+  }
+
+  .main-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .result {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }

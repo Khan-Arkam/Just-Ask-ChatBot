@@ -124,7 +124,9 @@ const Main = ({ toggleSidebar }) => {
             onClick={toggleSidebar}
           />
         </div>
-        <p className='nav-header'>Just-Ask ChatBot</p>
+        <div className='nav-header'>Just-Ask ChatBot
+        <div className="project-author">A project by Khan Arkam</div>  
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <img src={assets.user_icon} alt="user" />
         </div>
@@ -233,13 +235,13 @@ const Main = ({ toggleSidebar }) => {
             <div>
               <img src={assets.gallery_icon} alt="Gallery" />
               <img src={assets.mic_icon} alt="Mic" />
-              <img
+              {input?<img
                 src={assets.send_icon}
                 alt="Send"
                 onClick={handleSend}
                 className={`send-icon ${input.trim() === '' || isLimitReached ? 'hidden' : 'visible'}`}
                 style={{ cursor: isLimitReached ? 'not-allowed' : 'pointer' }}
-              />
+              />:null}
             </div>
           </div>
           <p className="bottom-info">
